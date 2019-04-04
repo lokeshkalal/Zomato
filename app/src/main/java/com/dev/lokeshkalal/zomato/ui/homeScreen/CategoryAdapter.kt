@@ -58,7 +58,7 @@ class CategoryAdapter(
         childRecyclerViewState.viewModel.getRestaurents().observe(homeScreenFragment, Observer {
             when (it.resourceState) {
                 ResourceState.SUCCESS -> {
-                    childRecyclerViewState.adapter.setData(it.data ?: emptyList())
+                    it.data?.let { childRecyclerViewState.adapter.setData(it) }
                 }
                 else -> {
                     // handle other  states here
