@@ -1,4 +1,4 @@
-package com.dev.lokeshkalal.zomato.ui
+package com.dev.lokeshkalal.zomato.ui.category
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,7 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dev.lokeshkalal.zomato.R
 import com.dev.lokeshkalal.zomato.repository.model.RestaurentCategory
+import com.dev.lokeshkalal.zomato.ui.restaurents.ChildRecyclerViewState
 import com.dev.lokeshkalal.zomato.ui.restaurents.RestaurentAdapter
+import com.dev.lokeshkalal.zomato.ui.restaurents.RestaurentListingViewModel
+import com.dev.lokeshkalal.zomato.ui.restaurents.TimeLineEndlessRecyclerScrollListener
 
 class CategoryAdapter(val homeScreenFragment: HomeScreenFragment) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
@@ -44,7 +47,11 @@ class CategoryAdapter(val homeScreenFragment: HomeScreenFragment) : RecyclerView
             val restaurentListingViewModel = RestaurentListingViewModel()
             val restaurentAdapter = RestaurentAdapter()
             childRecyclerViewState =
-                ChildRecyclerViewState(restaurentAdapter, restaurentListingViewModel, layoutManager)
+                ChildRecyclerViewState(
+                    restaurentAdapter,
+                    restaurentListingViewModel,
+                    layoutManager
+                )
             holder.recyclerView.layoutManager = childRecyclerViewState.layoutManager
             childPositionChildState.put(position, childRecyclerViewState)
             loadRestaurent(childRecyclerViewState, category.id)

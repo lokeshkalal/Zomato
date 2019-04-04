@@ -1,7 +1,6 @@
 package com.dev.lokeshkalal.zomato.ui.restaurents
 
 import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +12,6 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.dev.lokeshkalal.zomato.R
 import com.dev.lokeshkalal.zomato.repository.model.Restaurent
-import com.dev.lokeshkalal.zomato.repository.model.RestaurentCategory
-import android.R.id
-import android.widget.ProgressBar
-import androidx.recyclerview.widget.LinearLayoutManager
 
 
 class RestaurentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -25,7 +20,7 @@ class RestaurentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         VIEW_TYPE_RESTAURENT, VIEW_TYPE_LOADER
     }
 
-    var showLoadMore = false; // hacky solution but want to create common model ingterface for now
+    var showLoadMore = false; // hacky solution but want to create common model interface for now
     var restaurentList: MutableList<Restaurent> = mutableListOf()
 
 
@@ -83,16 +78,7 @@ class RestaurentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ViewHolder -> {
-                val restaurent = restaurentList[position]
-                holder.restaurentName.text = restaurent.name
-                holder.rating.text = restaurent.rating
-                holder.rating.setBackgroundColor(Color.parseColor("#" + restaurent.ratingColor))
-                holder.address.text = restaurent.address
-                holder.cuisnse.text = restaurent.cuisine
-                Glide.with(holder.thumb.context)
-                    .load(restaurent.thumbUrl)
-                    .apply(RequestOptions().transform(RoundedCorners(10)))
-                    .into(holder.thumb)
+                holder.bind(restaurentList[position])
             }
 
             is LoadingViewHolder -> {
@@ -132,6 +118,18 @@ class RestaurentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             address = view.findViewById(R.id.address)
             rating = view.findViewById(R.id.rating)
             thumb = view.findViewById(R.id.restaurent_thumb)
+        }
+
+        fun bind(restaurent: Restaurent) {
+            restaurentName.text = restaurent.name
+            rating.text = restaurent.rating
+            rating.setBackgroundColor(Color.parseColor("#" + restaurent.ratingColor))
+            address.text = restaurent.address
+            cuisnse.text = restaurent.cuisine
+            Glide.with(thumb.context)
+                .load(restaurent.thumbUrl)
+                .apply(RequestOptions().transform(RoundedCorners(10)))
+                .into(thumb)
         }
     }
 }

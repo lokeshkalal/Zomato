@@ -1,4 +1,4 @@
-package com.dev.lokeshkalal.zomato.ui
+package com.dev.lokeshkalal.zomato.ui.category
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -14,6 +14,7 @@ import com.dev.lokeshkalal.zomato.R
 import com.dev.lokeshkalal.zomato.repository.model.Restaurent
 import com.dev.lokeshkalal.zomato.repository.model.RestaurentCategory
 import com.dev.lokeshkalal.zomato.ui.restaurents.RestaurentAdapter
+import com.dev.lokeshkalal.zomato.ui.restaurents.RestaurentListingViewModel
 import kotlinx.android.synthetic.main.home_screen_fragment.*
 
 class HomeScreenFragment : Fragment() {

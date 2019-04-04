@@ -3,6 +3,7 @@ package com.dev.lokeshkalal.zomato.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.dev.lokeshkalal.zomato.R
+import com.dev.lokeshkalal.zomato.ui.category.HomeScreenFragment
 
 class HomeScreenActivity : AppCompatActivity() {
 

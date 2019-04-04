@@ -1,4 +1,4 @@
-package com.dev.lokeshkalal.zomato.ui
+package com.dev.lokeshkalal.zomato.ui.restaurents
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
