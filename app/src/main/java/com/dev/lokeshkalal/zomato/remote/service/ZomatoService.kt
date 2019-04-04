@@ -2,6 +2,7 @@ package com.dev.lokeshkalal.zomato.remote.service
 
 import com.dev.lokeshkalal.zomato.remote.model.CategoryResponse
 import com.dev.lokeshkalal.zomato.remote.model.RestaurentListingResponse
+import com.dev.lokeshkalal.zomato.remote.model.restaurentDetail.RestaurentDetailResponse
 import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -23,4 +24,9 @@ interface ZomatoService {
         @Query("lon") long: Double,
         @Query("start") offset: Int
     ): Single<RestaurentListingResponse>
+
+
+    @Headers("user-key: c750173e8cf7e5fdc2c331cf897ee8c3")
+    @GET("api/v2.1/restaurant")
+    fun getRestaurentDetail(@Query("res_id") restaurentID: Int): Single<RestaurentDetailResponse>
 }

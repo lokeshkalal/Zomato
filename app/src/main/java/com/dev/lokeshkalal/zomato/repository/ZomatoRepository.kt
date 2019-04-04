@@ -1,5 +1,6 @@
 package com.dev.lokeshkalal.zomato.repository
 
+import com.dev.lokeshkalal.zomato.remote.model.restaurentDetail.RestaurentDetailResponse
 import com.dev.lokeshkalal.zomato.remote.service.ZomatoService
 import com.dev.lokeshkalal.zomato.remote.service.ZomatoServiceFactory
 import com.dev.lokeshkalal.zomato.repository.model.Restaurent
@@ -15,8 +16,8 @@ class ZomatoRepository {
     }
 
 
-    fun getRestaurents(category: Int, lat: Double, long: Double,offset : Int): Single<List<Restaurent>> {
-        return zomatoService.getRestaurentList(category, lat, long,offset)
+    fun getRestaurents(category: Int, lat: Double, long: Double, offset: Int): Single<List<Restaurent>> {
+        return zomatoService.getRestaurentList(category, lat, long, offset)
             .map {
                 it.restaurants.map { restaurant ->
                     Restaurent(
@@ -41,5 +42,10 @@ class ZomatoRepository {
             }
         }
 
+    }
+
+
+    fun getRestaurentDetail(restaurentID: Int): Single<RestaurentDetailResponse> {
+        return zomatoService.getRestaurentDetail(restaurentID)
     }
 }
