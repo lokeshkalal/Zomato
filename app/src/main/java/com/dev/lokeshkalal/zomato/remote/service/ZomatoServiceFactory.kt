@@ -9,11 +9,11 @@ import java.util.concurrent.TimeUnit
 
 object ZomatoServiceFactory {
 
-    public fun makeGithubTrendingService(isDebug: Boolean): ZomatoService {
-        return makeGithubTrendingService(makeOkhttpClient(makeLoggingInterceptor(isDebug)))
+    public fun makeZomatoService(isDebug: Boolean): ZomatoService {
+        return makeZomatoService(makeOkhttpClient(makeLoggingInterceptor(isDebug)))
     }
 
-    private fun makeGithubTrendingService(okHttpClient: OkHttpClient): ZomatoService {
+    private fun makeZomatoService(okHttpClient: OkHttpClient): ZomatoService {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://developers.zomato.com/")
             .client(okHttpClient)

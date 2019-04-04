@@ -1,12 +1,11 @@
-package com.dev.lokeshkalal.zomato.ui
+package com.dev.lokeshkalal.zomato.ui.homeScreen
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.dev.lokeshkalal.zomato.R
-import com.dev.lokeshkalal.zomato.ui.category.HomeScreenFragment
+
 
 class HomeScreenActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_screen_activity)
