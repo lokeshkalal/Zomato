@@ -17,7 +17,7 @@ abstract class RemoteModule {
         @Provides
         @JvmStatic
         fun provideZomatoService(): ZomatoService {
-            return ZomatoServiceFactory.makeGithubTrendingService(BuildConfig.DEBUG)
+            return ZomatoServiceFactory.makeZomatoService(BuildConfig.DEBUG)
         }
     }
 

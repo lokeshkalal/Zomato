@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dev.lokeshkalal.zomato.repository.ZomatoRepository
-import com.dev.lokeshkalal.zomato.repository.ZomatoRepositoryImpl
 import com.dev.lokeshkalal.zomato.repository.model.Restaurent
 import com.dev.lokeshkalal.zomato.ui.state.Resource
 import com.dev.lokeshkalal.zomato.ui.state.ResourceState
@@ -16,26 +15,26 @@ import io.reactivex.schedulers.Schedulers
 class RestaurentListingViewModel constructor(private val zomatoRepository: ZomatoRepository) : ViewModel() {
 
 
-    val categoryLiveData: MutableLiveData<Resource<List<Restaurent>>>
+    val restaurentLiveData: MutableLiveData<Resource<List<Restaurent>>>
 
     val disposable: CompositeDisposable
     var moreDataAvailable: Boolean
 
     init {
-        categoryLiveData = MutableLiveData()
+        restaurentLiveData = MutableLiveData()
         disposable = CompositeDisposable()
         moreDataAvailable = true
     }
 
     fun getRestaurents(): LiveData<Resource<List<Restaurent>>> {
-        return categoryLiveData
+        return restaurentLiveData
     }
 
     fun fetchRestaurents(category: Int, lat: Double, long: Double, offset: Int) {
         if (offset > 0) {
-            categoryLiveData.postValue(Resource(ResourceState.PAGINATING, categoryLiveData.value?.data, null))
+            restaurentLiveData.postValue(Resource(ResourceState.PAGINATING, restaurentLiveData.value?.data, null))
         } else {
-            categoryLiveData.postValue(Resource(ResourceState.LOADING, null, null))
+            restaurentLiveData.postValue(Resource(ResourceState.LOADING, null, null))
         }
 
         disposable.add(
@@ -47,7 +46,7 @@ class RestaurentListingViewModel constructor(private val zomatoRepository: Zomat
     }
 
     fun shouldFetchMoreData(): Boolean {
-        return (categoryLiveData.value?.resourceState != ResourceState.PAGINATING) && (categoryLiveData.value?.resourceState != ResourceState.LOADING) && moreDataAvailable
+        return (restaurentLiveData.value?.resourceState != ResourceState.PAGINATING) && (restaurentLiveData.value?.resourceState != ResourceState.LOADING) && moreDataAvailable
     }
 
     override fun onCleared() {
@@ -60,14 +59,14 @@ class RestaurentListingViewModel constructor(private val zomatoRepository: Zomat
             moreDataAvailable = !t.isEmpty()
             val currentList = obtainCurrentData().toMutableList()
             currentList.addAll(t)
-            categoryLiveData.postValue(Resource(ResourceState.SUCCESS, currentList, null))
+            restaurentLiveData.postValue(Resource(ResourceState.SUCCESS, currentList, null))
         }
 
         override fun onError(e: Throwable) {
-            categoryLiveData.postValue(Resource(ResourceState.ERROR, null, null))
+            restaurentLiveData.postValue(Resource(ResourceState.ERROR, null, null))
         }
 
     }
 
-    private fun obtainCurrentData() = categoryLiveData.value?.data ?: emptyList()
+    private fun obtainCurrentData() = restaurentLiveData.value?.data ?: emptyList()
 }

@@ -17,7 +17,7 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(HomeScreenViewModel::class)
-    abstract fun bindBrowseProjectsViewModel(viewModel: HomeScreenViewModel): ViewModel
+    abstract fun bindHomeScreenViewModel(viewModel: HomeScreenViewModel): ViewModel
 
     @Binds
     @IntoMap

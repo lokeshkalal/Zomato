@@ -16,7 +16,6 @@ import com.bumptech.glide.Glide
 import com.dev.lokeshkalal.zomato.R
 import com.dev.lokeshkalal.zomato.injection.ViewModelFactory
 import com.dev.lokeshkalal.zomato.remote.model.restaurentDetail.RestaurentDetailResponse
-import dagger.android.AndroidInjection
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.restaurent_detail_fragment.*
 import javax.inject.Inject
@@ -27,7 +26,7 @@ class RestaurentDetailFragment : Fragment() {
 
         fun newInstance(restaurentId: Int): RestaurentDetailFragment {
             val bundle = Bundle()
-            bundle.putInt(RestaurentDetail.ARG_RESTATURENT_ID, restaurentId);
+            bundle.putInt(RestaurentDetailActivity.ARG_RESTATURENT_ID, restaurentId);
             val fragment = RestaurentDetailFragment()
             fragment.arguments = bundle
             return fragment
@@ -42,7 +41,7 @@ class RestaurentDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(RestaurentDetailViewModel::class.java)
-        restaurentId = arguments?.getInt(RestaurentDetail.ARG_RESTATURENT_ID, 0)!!
+        restaurentId = arguments?.getInt(RestaurentDetailActivity.ARG_RESTATURENT_ID, 0)!!
         viewModel.fetchRestaurentDetail(restaurentId)
     }
 

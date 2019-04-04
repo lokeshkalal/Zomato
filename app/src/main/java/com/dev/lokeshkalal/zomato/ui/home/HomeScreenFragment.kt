@@ -17,10 +17,8 @@ import com.dev.lokeshkalal.zomato.injection.ViewModelFactory
 import com.dev.lokeshkalal.zomato.repository.ZomatoRepository
 import com.dev.lokeshkalal.zomato.repository.model.RestaurentCategory
 import com.dev.lokeshkalal.zomato.ui.model.Location
-import com.dev.lokeshkalal.zomato.ui.detail.RestaurentDetail
-import com.dev.lokeshkalal.zomato.ui.restaurents.RestaurentAdapter
+import com.dev.lokeshkalal.zomato.ui.detail.RestaurentDetailActivity
 import com.dev.lokeshkalal.zomato.ui.restaurents.RestaurentClickListener
-import com.dev.lokeshkalal.zomato.ui.restaurents.RestaurentListingViewModel
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.home_screen_fragment.*
 import javax.inject.Inject
@@ -93,7 +91,7 @@ class HomeScreenFragment : Fragment(), RestaurentClickListener {
     }
 
     override fun onRestaurentClicked(restaurentId: Int) {
-        startActivity(RestaurentDetail.getRestaurentDetailIntent(context!!, restaurentId))
+        startActivity(RestaurentDetailActivity.getRestaurentDetailIntent(context!!, restaurentId))
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
