@@ -1,5 +1,6 @@
 package com.dev.lokeshkalal.zomato.ui.detail
 
+import android.graphics.Color
 import android.net.Uri
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -54,9 +55,15 @@ class RestaurentDetailFragment : Fragment() {
 
     private fun renderData(restaurentDetailResponse: RestaurentDetailResponse) {
         progress_bar.visibility = View.GONE
-        message.text = restaurentDetailResponse.name
-        toolbar.title = restaurentDetailResponse.name
+        restaurantName.text = restaurentDetailResponse.name
+        toolbar.setNavigationIcon(R.drawable.back_button)
+
         Glide.with(this).load(Uri.parse(restaurentDetailResponse.thumb)).centerCrop().into(top_thumb)
+        restaurantCuisines.text = restaurentDetailResponse.cuisines
+        restaurantRating.text = restaurentDetailResponse.userRating.aggregateRating
+        restaurantReviews.text = restaurentDetailResponse.userRating.votes + " reviews"
+        restaurantRating.setTextColor(Color.parseColor("#"+restaurentDetailResponse.userRating.ratingColor))
+        restaurantReviews.setTextColor(Color.parseColor("#"+restaurentDetailResponse.userRating.ratingColor))
 
     }
 
