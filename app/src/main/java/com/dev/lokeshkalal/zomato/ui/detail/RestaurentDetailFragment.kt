@@ -1,5 +1,6 @@
 package com.dev.lokeshkalal.zomato.ui.detail
 
+import android.net.Uri
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.dev.lokeshkalal.zomato.R
 import com.dev.lokeshkalal.zomato.remote.model.restaurentDetail.RestaurentDetailResponse
 import kotlinx.android.synthetic.main.restaurent_detail_fragment.*
@@ -53,6 +55,8 @@ class RestaurentDetailFragment : Fragment() {
     private fun renderData(restaurentDetailResponse: RestaurentDetailResponse) {
         progress_bar.visibility = View.GONE
         message.text = restaurentDetailResponse.name
+        toolbar.title = restaurentDetailResponse.name
+        Glide.with(this).load(Uri.parse(restaurentDetailResponse.thumb)).centerCrop().into(top_thumb)
 
     }
 
