@@ -1,6 +1,8 @@
 package com.dev.lokeshkalal.zomato.ui.detail
 
 import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.net.Uri
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -57,12 +59,13 @@ class RestaurentDetailFragment : Fragment() {
         progress_bar.visibility = View.GONE
         restaurantName.text = restaurentDetailResponse.name
         toolbar.setNavigationIcon(R.drawable.back_button)
+        toolbar.setNavigationOnClickListener { activity?.onBackPressed() }
 
         Glide.with(this).load(Uri.parse(restaurentDetailResponse.thumb)).centerCrop().into(top_thumb)
         restaurantCuisines.text = restaurentDetailResponse.cuisines
         restaurantRating.text = restaurentDetailResponse.userRating.aggregateRating
+        restaurantRating.background.colorFilter = PorterDuffColorFilter(Color.parseColor("#"+restaurentDetailResponse.userRating.ratingColor), PorterDuff.Mode.SRC)
         restaurantReviews.text = restaurentDetailResponse.userRating.votes + " reviews"
-        restaurantRating.setTextColor(Color.parseColor("#"+restaurentDetailResponse.userRating.ratingColor))
         restaurantReviews.setTextColor(Color.parseColor("#"+restaurentDetailResponse.userRating.ratingColor))
 
     }

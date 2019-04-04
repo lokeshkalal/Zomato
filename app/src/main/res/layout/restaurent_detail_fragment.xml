@@ -45,13 +45,15 @@
 
             <TextView
                     android:id="@+id/restaurantName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="restaurant name"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/restaurentinfoguidline"
                     app:layout_constraintHorizontal_bias="0"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:textSize="18sp"
                     android:textColor="#000"
                     android:textStyle="bold"
@@ -59,9 +61,9 @@
 
             <TextView
                     android:id="@+id/restaurantCuisines"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="Restaurent Cousine"
+                    android:text="Restaurent Cousine asdsad dasdasd dsdasdada dasdsds "
                     android:maxLines="2"
                     app:layout_constraintTop_toBottomOf="@id/restaurantName"
                     app:layout_constraintStart_toStartOf="parent"
@@ -85,8 +87,13 @@
                     app:layout_constraintStart_toStartOf="@id/restaurentinfoguidline"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1"
+                    app:layout_constraintBaseline_toBaselineOf="@id/restaurantName"
+                    android:background="@drawable/rounded_bg"
                     android:textSize="18sp"
-                    android:textColor="#000"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:gravity="center"
+                    android:textColor="#fff"
                     android:textStyle="bold"
             />
 
@@ -100,6 +107,7 @@
                     app:layout_constraintStart_toStartOf="@id/restaurentinfoguidline"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1"
+                    app:layout_constraintBaseline_toBaselineOf="@id/restaurantCuisines"
                     android:textSize="10sp"
             />
 
