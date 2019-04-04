@@ -6,6 +6,7 @@ import android.graphics.PorterDuffColorFilter
 import android.net.Uri
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.os.SystemClock
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,8 @@ import com.bumptech.glide.Glide
 import com.dev.lokeshkalal.zomato.R
 import com.dev.lokeshkalal.zomato.remote.model.restaurentDetail.RestaurentDetailResponse
 import kotlinx.android.synthetic.main.restaurent_detail_fragment.*
+import java.util.concurrent.TimeUnit
+import kotlin.random.Random
 
 class RestaurentDetailFragment : Fragment() {
 
@@ -65,10 +68,14 @@ class RestaurentDetailFragment : Fragment() {
         restaurantCuisines.text = restaurentDetailResponse.cuisines
         restaurantRating.text = restaurentDetailResponse.userRating.aggregateRating
         restaurantRating.background.colorFilter = PorterDuffColorFilter(Color.parseColor("#"+restaurentDetailResponse.userRating.ratingColor), PorterDuff.Mode.SRC)
-        restaurantReviews.text = restaurentDetailResponse.userRating.votes + " reviews"
+        restaurantReviews.text = "${restaurentDetailResponse.userRating.votes} reviews"
         restaurantReviews.setTextColor(Color.parseColor("#"+restaurentDetailResponse.userRating.ratingColor))
 
+        address.text = restaurentDetailResponse.location.address
+        clossesIn.text = "Closes in ${formattedTime(Random(500).nextInt(1, 400))}"
+
     }
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -76,4 +83,5 @@ class RestaurentDetailFragment : Fragment() {
 
     }
 
+    fun formattedTime(mins: Int) = if (mins == 60) "1 hour" else if (mins == 1) "1 minute" else if (mins < 59) mins.toString() + " minutes" else (mins/60).toString() + " hours"
 }
