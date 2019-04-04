@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.net.Uri
+import android.content.Context
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,8 +14,12 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.dev.lokeshkalal.zomato.R
+import com.dev.lokeshkalal.zomato.injection.ViewModelFactory
 import com.dev.lokeshkalal.zomato.remote.model.restaurentDetail.RestaurentDetailResponse
+import dagger.android.AndroidInjection
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.restaurent_detail_fragment.*
+import javax.inject.Inject
 
 class RestaurentDetailFragment : Fragment() {
 
@@ -31,12 +36,19 @@ class RestaurentDetailFragment : Fragment() {
 
     private lateinit var viewModel: RestaurentDetailViewModel
     private var restaurentId: Int = 0
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(RestaurentDetailViewModel::class.java)
         restaurentId = arguments?.getInt(RestaurentDetail.ARG_RESTATURENT_ID, 0)!!
-        viewModel = ViewModelProviders.of(this).get(RestaurentDetailViewModel::class.java)
         viewModel.fetchRestaurentDetail(restaurentId)
+    }
+
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this);
+        super.onAttach(context)
     }
 
     override fun onCreateView(

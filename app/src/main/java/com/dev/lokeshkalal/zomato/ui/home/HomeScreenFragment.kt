@@ -1,5 +1,6 @@
-package com.dev.lokeshkalal.zomato.ui.category
+package com.dev.lokeshkalal.zomato.ui.home
 
+import android.content.Context
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,14 +13,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dev.lokeshkalal.zomato.R
-import com.dev.lokeshkalal.zomato.repository.model.Restaurent
+import com.dev.lokeshkalal.zomato.injection.ViewModelFactory
+import com.dev.lokeshkalal.zomato.repository.ZomatoRepository
 import com.dev.lokeshkalal.zomato.repository.model.RestaurentCategory
-import com.dev.lokeshkalal.zomato.ui.Location
+import com.dev.lokeshkalal.zomato.ui.model.Location
 import com.dev.lokeshkalal.zomato.ui.detail.RestaurentDetail
 import com.dev.lokeshkalal.zomato.ui.restaurents.RestaurentAdapter
 import com.dev.lokeshkalal.zomato.ui.restaurents.RestaurentClickListener
 import com.dev.lokeshkalal.zomato.ui.restaurents.RestaurentListingViewModel
+import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.home_screen_fragment.*
+import javax.inject.Inject
 
 class HomeScreenFragment : Fragment(), RestaurentClickListener {
 
@@ -28,16 +32,24 @@ class HomeScreenFragment : Fragment(), RestaurentClickListener {
     }
 
     private lateinit var viewModel: HomeScreenViewModel
-    private lateinit var restaurentViewModel: RestaurentListingViewModel
+
     private lateinit var adapter: CategoryAdapter
-    private lateinit var restaurentAdapter: RestaurentAdapter
+
     private var currentLocation = Location("Delhi", 28.7041, 77.1025)
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+    @Inject
+    lateinit var zomatoRepository: ZomatoRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(HomeScreenViewModel::class.java)
-        restaurentViewModel = ViewModelProviders.of(this).get(RestaurentListingViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeScreenViewModel::class.java)
+    }
+
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
     }
 
     override fun onCreateView(
@@ -64,7 +76,7 @@ class HomeScreenFragment : Fragment(), RestaurentClickListener {
     }
 
     private fun setUpRecyclerView() {
-        adapter = CategoryAdapter(this, currentLocation)
+        adapter = CategoryAdapter(this, currentLocation, zomatoRepository)
         categories_recyler_view.layoutManager = LinearLayoutManager(activity)
         categories_recyler_view.adapter = adapter
         adapter.setClickListener(this)

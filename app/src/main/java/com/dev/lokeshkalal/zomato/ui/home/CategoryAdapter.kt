@@ -1,4 +1,4 @@
-package com.dev.lokeshkalal.zomato.ui.category
+package com.dev.lokeshkalal.zomato.ui.home
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,11 +9,16 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dev.lokeshkalal.zomato.R
+import com.dev.lokeshkalal.zomato.repository.ZomatoRepository
 import com.dev.lokeshkalal.zomato.repository.model.RestaurentCategory
-import com.dev.lokeshkalal.zomato.ui.Location
+import com.dev.lokeshkalal.zomato.ui.model.Location
 import com.dev.lokeshkalal.zomato.ui.restaurents.*
+import com.dev.lokeshkalal.zomato.ui.state.ResourceState
 
-class CategoryAdapter(val homeScreenFragment: HomeScreenFragment, location: Location) :
+class CategoryAdapter(
+    private val homeScreenFragment: HomeScreenFragment, location: Location,
+    private val zomatoRepository: ZomatoRepository
+) :
     RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     companion object {
@@ -46,60 +51,24 @@ class CategoryAdapter(val homeScreenFragment: HomeScreenFragment, location: Loca
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val category = categoryList[position]
-        holder.categoryNameTextView.text = category.name
-
-        var childRecyclerViewState: ChildRecyclerViewState? = childPositionChildState.get(position)
-
-        if (childRecyclerViewState == null) {
-            val layoutManager = LinearLayoutManager(homeScreenFragment.context, LinearLayoutManager.HORIZONTAL, false)
-            val restaurentListingViewModel = RestaurentListingViewModel()
-            val restaurentAdapter = RestaurentAdapter()
-            restaurentAdapter.setClickListener(clickListener)
-            childRecyclerViewState =
-                ChildRecyclerViewState(
-                    restaurentAdapter,
-                    restaurentListingViewModel,
-                    layoutManager
-                )
-            holder.recyclerView.layoutManager = childRecyclerViewState.layoutManager
-            childPositionChildState.put(position, childRecyclerViewState)
-            loadRestaurent(childRecyclerViewState, category.id)
-            observeRestaurentDataChanges(childRecyclerViewState)
-        }
-
-        holder.recyclerView.adapter = childRecyclerViewState.adapter
-
-        holder.recyclerView.addOnScrollListener(object : LoadMoreRecyclerScrollListener() {
-            override fun onLoadMore() {
-                //childRecyclerViewState.adapter.showLoadMore()
-                loadRestaurent(childRecyclerViewState, category.id)
-            }
-
-        })
-        (holder.recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
-            childRecyclerViewState.currentPosition,
-            childRecyclerViewState.offset
-        )
-
-
-
-        Log.i(TAG, "onBindViewHolder " + childRecyclerViewState.currentPosition + "   " + position)
-
+        bindView(holder, position)
     }
 
     private fun observeRestaurentDataChanges(childRecyclerViewState: ChildRecyclerViewState) {
         childRecyclerViewState.viewModel.getRestaurents().observe(homeScreenFragment, Observer {
-            childRecyclerViewState.isLoading = false
-            childRecyclerViewState.adapter.setData(it)
-            childRecyclerViewState.adapter.hideLoadMore()
+            when (it.resourceState) {
+                ResourceState.SUCCESS -> {
+                    childRecyclerViewState.adapter.setData(it.data ?: emptyList())
+                }
+                else -> {
+                    // handle other  states here
+                }
+            }
         })
     }
 
     fun loadRestaurent(childRecyclerViewState: ChildRecyclerViewState, categortId: String) {
-        if (!childRecyclerViewState.isLoading) {
-            childRecyclerViewState.isLoading = true
-            childRecyclerViewState.adapter.showLoadMore()
+        if (childRecyclerViewState.viewModel.shouldFetchMoreData()) {
             childRecyclerViewState.viewModel.fetchRestaurents(
                 categortId.toInt(),
                 currentLocation.lat,
@@ -114,13 +83,11 @@ class CategoryAdapter(val homeScreenFragment: HomeScreenFragment, location: Loca
             holder.recyclerView.clearOnScrollListeners()
             val firstVisibleitem =
                 (holder.recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-            val item = holder.recyclerView.getChildAt(0)
-            val mTopOffset = if (item == null) 0 else item!!.getTop() - holder.recyclerView.getPaddingTop()
-            val mLeftOffset = if (item == null) 0 else item!!.getLeft() - holder.recyclerView.getPaddingLeft()
+
             childPositionChildState.get(holder.adapterPosition)
                 ?.let {
                     it.currentPosition = firstVisibleitem
-                    it.offset = Math.max(mLeftOffset, mTopOffset)
+
                 }
             Log.i(TAG, "onViewRecycled " + holder.recyclerView.scrollY + "   " + holder.adapterPosition)
         }
@@ -140,5 +107,46 @@ class CategoryAdapter(val homeScreenFragment: HomeScreenFragment, location: Loca
             recyclerView = view.findViewById(R.id.rest_recyler_view)
             recyclerView.setRecycledViewPool(viewPool)
         }
+    }
+
+    private fun bindView(holder: ViewHolder, position: Int) {
+        val category = categoryList[position]
+        holder.categoryNameTextView.text = category.name
+
+        var childRecyclerViewState: ChildRecyclerViewState? = childPositionChildState.get(position)
+
+        if (childRecyclerViewState == null) {
+            val restaurentListingViewModel = RestaurentListingViewModel(zomatoRepository)
+            val restaurentAdapter = RestaurentAdapter()
+            restaurentAdapter.setClickListener(clickListener)
+            childRecyclerViewState =
+                ChildRecyclerViewState(
+                    restaurentAdapter,
+                    restaurentListingViewModel
+                )
+            childPositionChildState.put(position, childRecyclerViewState)
+            loadRestaurent(childRecyclerViewState, category.id)
+            observeRestaurentDataChanges(childRecyclerViewState)
+        }
+
+
+        holder.recyclerView.adapter = childRecyclerViewState.adapter
+        holder.recyclerView.layoutManager =
+            LinearLayoutManager(homeScreenFragment.context, LinearLayoutManager.HORIZONTAL, false)
+        holder.recyclerView.addOnScrollListener(object : LoadMoreRecyclerScrollListener() {
+            override fun onLoadMore() {
+                loadRestaurent(childRecyclerViewState, category.id)
+            }
+
+        })
+        (holder.recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
+            childRecyclerViewState.currentPosition,
+            0
+        )
+
+        Log.i(
+            TAG,
+            "onBindViewHolder " + childRecyclerViewState.currentPosition + "   " + position
+        )
     }
 }

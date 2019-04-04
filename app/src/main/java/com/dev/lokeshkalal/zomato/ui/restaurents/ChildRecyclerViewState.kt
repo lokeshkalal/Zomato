@@ -6,12 +6,8 @@ import com.dev.lokeshkalal.zomato.ui.restaurents.RestaurentListingViewModel
 
 class ChildRecyclerViewState(
     val adapter: RestaurentAdapter,
-    val viewModel: RestaurentListingViewModel,
-    val layoutManager: LinearLayoutManager
+    val viewModel: RestaurentListingViewModel
 
 ) {
     var currentPosition: Int = 0
-    var offset = 0
-    var isLoading = false;
-
 }

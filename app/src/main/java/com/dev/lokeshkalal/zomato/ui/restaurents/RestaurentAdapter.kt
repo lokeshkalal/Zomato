@@ -20,8 +20,8 @@ class RestaurentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         VIEW_TYPE_RESTAURENT, VIEW_TYPE_LOADER
     }
 
-    var showLoadMore = false; // hacky solution but want to create common model interface for now
-    var restaurentList: MutableList<Restaurent> = mutableListOf()
+    var showLoadMore = true; // hacky way but want to create common model interface for now
+    var restaurentList: List<Restaurent> = mutableListOf()
     private var clickListener: RestaurentClickListener? = null
 
 
@@ -89,17 +89,19 @@ class RestaurentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun setData(data: List<Restaurent>) {
-        showLoadMore = false
-        if (restaurentList.isEmpty()) {
-            val startIndex = restaurentList.count() - 1;
-            restaurentList.addAll(data)
-
-            notifyItemRangeInserted(startIndex, restaurentList.count() - 1);
-        } else {
-            restaurentList.addAll(data)
-            notifyDataSetChanged()
+        if (data.count() == restaurentList.count())
+            hideLoadMore()
+        else {
+            if (restaurentList.isEmpty()) {
+                restaurentList = data
+                notifyItemRangeInserted(1, data.count())
+            } else {
+                val startIndex = restaurentList.count()
+                restaurentList = data
+                notifyDataSetChanged()
+                notifyItemRangeInserted(startIndex, data.count());
+            }
         }
-
     }
 
     fun setClickListener(clickListener: RestaurentClickListener?) {
