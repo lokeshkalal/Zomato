@@ -5,6 +5,7 @@ import com.dev.lokeshkalal.zomato.remote.service.ZomatoService
 import com.dev.lokeshkalal.zomato.remote.service.ZomatoServiceFactory
 import com.dev.lokeshkalal.zomato.repository.model.Restaurent
 import com.dev.lokeshkalal.zomato.repository.model.RestaurentCategory
+import com.dev.lokeshkalal.zomato.repository.model.RestaurentDetail
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -20,7 +21,7 @@ class ZomatoRepositoryImpl @Inject constructor(val zomatoRemote: ZomatoRemote) :
     }
 
 
-    override fun getRestaurentDetail(restaurentID: Int): Single<RestaurentDetailResponse> {
+    override fun getRestaurentDetail(restaurentID: Int): Single<RestaurentDetail> {
         return zomatoRemote.getRestaurentDetail(restaurentID)
     }
 }

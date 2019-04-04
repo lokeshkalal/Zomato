@@ -3,6 +3,7 @@ package com.dev.lokeshkalal.zomato.repository
 import com.dev.lokeshkalal.zomato.remote.model.restaurentDetail.RestaurentDetailResponse
 import com.dev.lokeshkalal.zomato.repository.model.Restaurent
 import com.dev.lokeshkalal.zomato.repository.model.RestaurentCategory
+import com.dev.lokeshkalal.zomato.repository.model.RestaurentDetail
 import io.reactivex.Single
 
 interface ZomatoRepository {
@@ -13,5 +14,5 @@ interface ZomatoRepository {
     fun getCategories(): Single<List<RestaurentCategory>>
 
 
-    fun getRestaurentDetail(restaurentID: Int): Single<RestaurentDetailResponse>
+    fun getRestaurentDetail(restaurentID: Int): Single<RestaurentDetail>
 }

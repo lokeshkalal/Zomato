@@ -16,7 +16,7 @@
                 app:expandedTitleGravity="top"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
             <ImageView
-                    android:id="@+id/top_thumb"
+                    android:id="@+id/banner"
                     android:layout_width="match_parent"
                     android:layout_height="225dp"
                     android:scaleType="fitCenter"
@@ -44,122 +44,159 @@
                 app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/firstBlock"
+                    android:id="@+id/restaurent_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                        android:id="@+id/restaurantName"
+                        android:id="@+id/restaurant_name"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="restaurant name"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="@id/restaurentinfoguidline"
+                        app:layout_constraintEnd_toEndOf="@id/restaurent_info_guidline"
                         app:layout_constraintHorizontal_bias="0"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:textSize="18sp"
-                        android:textColor="#000"
-                        android:textStyle="bold"
-                        />
+                        android:textColor="@color/black"
+                        android:textStyle="bold"/>
 
                 <TextView
-                        android:id="@+id/restaurantCuisines"
+                        android:id="@+id/restaurant_cuisines"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Restaurent Cousine asdsad dasdasd dsdasdada dasdsds "
+                        tools:text="Restaurent Cousine"
                         android:maxLines="2"
-                        app:layout_constraintTop_toBottomOf="@id/restaurantName"
+                        app:layout_constraintTop_toBottomOf="@id/restaurant_name"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="@id/restaurentinfoguidline"
-                        app:layout_constraintHorizontal_bias="0"
-                />
+                        app:layout_constraintEnd_toEndOf="@id/restaurent_info_guidline"
+                        app:layout_constraintHorizontal_bias="0"/>
 
                 <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/restaurentinfoguidline"
+                        android:id="@+id/restaurent_info_guidline"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:orientation="vertical"
                         app:layout_constraintGuide_percent="0.8"/>
 
                 <TextView
-                        android:id="@+id/restaurantRating"
+                        android:id="@+id/restaurant_rating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="4.4"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="@id/restaurentinfoguidline"
+                        app:layout_constraintStart_toStartOf="@id/restaurent_info_guidline"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1"
-                        app:layout_constraintBaseline_toBaselineOf="@id/restaurantName"
+                        app:layout_constraintBaseline_toBaselineOf="@id/restaurant_name"
                         android:background="@drawable/rounded_bg"
                         android:textSize="18sp"
                         android:paddingStart="4dp"
                         android:paddingEnd="4dp"
                         android:gravity="center"
-                        android:textColor="#fff"
-                        android:textStyle="bold"
-                />
+                        android:textColor="@color/white"
+                        android:textStyle="bold"/>
 
                 <TextView
-                        android:id="@+id/restaurantReviews"
+                        android:id="@+id/restaurant_reviews"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="12345 reviews"
+                        android:text="@string/_12345_reviews"
                         android:maxLines="2"
-                        app:layout_constraintTop_toBottomOf="@id/restaurantRating"
-                        app:layout_constraintStart_toStartOf="@id/restaurentinfoguidline"
+                        app:layout_constraintTop_toBottomOf="@id/restaurant_rating"
+                        app:layout_constraintStart_toStartOf="@id/restaurent_info_guidline"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1"
-                        app:layout_constraintBaseline_toBaselineOf="@id/restaurantCuisines"
+                        app:layout_constraintBaseline_toBaselineOf="@id/restaurant_cuisines"
                         android:textSize="10sp"
                 />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+
             <View
-                    android:id="@+id/dummy1"
+                    android:id="@+id/first_divider"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"
-                    app:layout_constraintTop_toBottomOf="@id/firstBlock"
-                    android:background="@android:color/darker_gray"
-                    />
+                    app:layout_constraintTop_toBottomOf="@id/restaurent_info"
+                    android:background="@android:color/darker_gray"/>
+
+
             <TextView
                     android:id="@+id/address"
-                    app:layout_constraintTop_toBottomOf="@id/dummy1"
+                    app:layout_constraintTop_toBottomOf="@id/first_divider"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="2dp"
-                    android:text="address"
+                    android:text="@string/address"
                     android:textSize="16sp"/>
             <TextView
-                    android:id="@+id/clossesIn"
+                    android:id="@+id/closes_in"
                     app:layout_constraintTop_toBottomOf="@id/address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:layout_marginBottom="2dp"
                     android:textColor="@android:color/holo_red_light"
-                    android:text="close in"
+                    android:text="@string/close_in"
                     android:textSize="16sp"/>
 
             <View
-                    android:id="@+id/dummy2"
+                    android:id="@+id/second_divider"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"
-                    app:layout_constraintTop_toBottomOf="@id/clossesIn"
-                    android:background="@android:color/darker_gray"
-            />
+                    app:layout_constraintTop_toBottomOf="@id/closes_in"
+                    android:background="@android:color/darker_gray"/>
+
+            <TextView
+                    android:id="@+id/average_cost_for_two"
+                    app:layout_constraintTop_toBottomOf="@id/second_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:text="@string/average_cost_for_two"
+                    android:textSize="16sp"/>
+            <TextView
+                    android:id="@+id/average_cost"
+                    app:layout_constraintTop_toBottomOf="@id/average_cost_for_two"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:textSize="16sp"/>
+            <View
+                    android:id="@+id/third_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    app:layout_constraintTop_toBottomOf="@id/average_cost"
+                    android:background="@android:color/darker_gray"/>
+
+
+            <TextView
+                    android:id="@+id/delivery_info"
+                    app:layout_constraintTop_toBottomOf="@id/third_divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:text="@string/average_cost_for_two"
+                    android:textSize="16sp"/>
+
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
     </androidx.core.widget.NestedScrollView>
@@ -176,5 +213,16 @@
                  android:layout_gravity="center"
                  app:layout_constraintStart_toStartOf="parent"
                  android:layout_marginStart="8dp"/>
+
+
+    <Button android:layout_gravity="center"
+            android:id="@+id/retry"
+            android:text="Retry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/categories_recyler_view"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

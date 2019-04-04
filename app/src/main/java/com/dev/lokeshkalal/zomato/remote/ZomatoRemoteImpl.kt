@@ -8,6 +8,7 @@ import com.dev.lokeshkalal.zomato.remote.service.ZomatoService
 import com.dev.lokeshkalal.zomato.repository.ZomatoRemote
 import com.dev.lokeshkalal.zomato.repository.model.Restaurent
 import com.dev.lokeshkalal.zomato.repository.model.RestaurentCategory
+import com.dev.lokeshkalal.zomato.repository.model.RestaurentDetail
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -38,8 +39,8 @@ class ZomatoRemoteImpl @Inject constructor(
 
     }
 
-    override fun getRestaurentDetail(restaurentID: Int): Single<RestaurentDetailResponse> {
-        return zomatoService.getRestaurentDetail(restaurentID)
+    override fun getRestaurentDetail(restaurentID: Int): Single<RestaurentDetail> {
+        return zomatoService.getRestaurentDetail(restaurentID).map { restaurentDetailMapper.mapModelFromResponse(it) }
 
     }
 }

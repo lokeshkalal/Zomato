@@ -54,7 +54,7 @@ class HomeScreenViewModel @Inject constructor(private val zomatoRepository: Zoma
         }
 
         override fun onError(e: Throwable) {
-            categoryLiveData.postValue(Resource(ResourceState.ERROR, null, null))
+            categoryLiveData.postValue(Resource(ResourceState.ERROR, null, e.localizedMessage))
         }
 
     }

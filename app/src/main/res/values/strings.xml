@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Zomato</string>
     <string name="your_location">Your location</string>
+    <string name="_12345_reviews">12345 reviews</string>
+    <string name="address">address</string>
+    <string name="close_in">close in</string>
+    <string name="average_cost_for_two">Average cost for two</string>
+    <string name="delivering_now">Delivering now</string>
+    <string name="closed_for_delivery">Currently closed for delivery</string>
 </resources>
