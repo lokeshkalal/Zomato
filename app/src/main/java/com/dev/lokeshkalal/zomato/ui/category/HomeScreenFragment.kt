@@ -8,11 +8,13 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dev.lokeshkalal.zomato.R
 import com.dev.lokeshkalal.zomato.repository.model.Restaurent
 import com.dev.lokeshkalal.zomato.repository.model.RestaurentCategory
+import com.dev.lokeshkalal.zomato.ui.Location
 import com.dev.lokeshkalal.zomato.ui.restaurents.RestaurentAdapter
 import com.dev.lokeshkalal.zomato.ui.restaurents.RestaurentListingViewModel
 import kotlinx.android.synthetic.main.home_screen_fragment.*
@@ -27,6 +29,7 @@ class HomeScreenFragment : Fragment() {
     private lateinit var restaurentViewModel: RestaurentListingViewModel
     private lateinit var adapter: CategoryAdapter
     private lateinit var restaurentAdapter: RestaurentAdapter
+    private var currentLocation = Location("Delhi", 28.7041, 77.1025)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,14 +51,23 @@ class HomeScreenFragment : Fragment() {
         setUpRecyclerView();
         ObserverFetchCategoryData()
         viewModel.fetchCatgories()
+        setToolBar()
+
 
         //setUpListRecyclerView()
         //ObserverRestaurentData()
         //restaurentViewModel.fetchRestaurents(1, 28.7041, 77.1025)
     }
 
+    private fun setToolBar() {
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
+        (activity as AppCompatActivity).supportActionBar?.setTitle(currentLocation.name)
+        (activity as AppCompatActivity).supportActionBar?.setSubtitle(getString(R.string.your_location))
+
+    }
+
     private fun setUpRecyclerView() {
-        adapter = CategoryAdapter(this)
+        adapter = CategoryAdapter(this, currentLocation)
         categories_recyler_view.layoutManager = LinearLayoutManager(activity)
         categories_recyler_view.adapter = adapter
     }

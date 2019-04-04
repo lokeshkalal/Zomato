@@ -128,6 +128,7 @@ class RestaurentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             cuisnse.text = restaurent.cuisine
             Glide.with(thumb.context)
                 .load(restaurent.thumbUrl)
+                .placeholder(R.drawable.restaurent_placeholder)
                 .apply(RequestOptions().transform(RoundedCorners(10)))
                 .into(thumb)
         }

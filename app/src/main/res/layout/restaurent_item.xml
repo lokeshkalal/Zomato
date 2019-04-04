@@ -6,8 +6,8 @@
 
     <ImageView
             android:id="@+id/restaurent_thumb"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
             android:layout_marginTop="16dp" app:layout_constraintTop_toTopOf="parent"/>
 
@@ -17,6 +17,8 @@
             android:paddingRight="1dp"
             android:maxLines="1"
             tools:text="rating"
+            android:textSize="16dp"
+            android:textColor="@android:color/white"
             android:background="@drawable/rounded_bg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -27,40 +29,50 @@
 
     <TextView
             android:maxLines="1"
+            android:textColor="@color/grey"
             android:ellipsize="end"
+            android:textStyle="bold"
             tools:text="restaurent name"
+            android:textSize="18dp"
             android:id="@+id/restaurent_name"
-            android:layout_width="100dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintTop_toBottomOf="@+id/restaurent_thumb"
             app:layout_constraintStart_toStartOf="@+id/restaurent_thumb"
-            app:layout_constraintEnd_toEndOf="@+id/restaurent_thumb" app:layout_constraintHorizontal_bias="0.0"/>
+            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"/>
 
     <TextView
             android:maxLines="1"
             tools:text="cuisine"
             android:ellipsize="end"
+            android:textSize="16dp"
+            android:textColor="@color/blue_grey"
             android:id="@+id/cuisine"
-            android:layout_width="100dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/restaurent_name"
-            app:layout_constraintStart_toStartOf="@+id/restaurent_name" android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/restaurent_thumb" app:layout_constraintHorizontal_bias="0.0"/>
+            app:layout_constraintStart_toStartOf="@+id/restaurent_name"
+            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"/>
 
     <TextView
             android:maxLines="1"
             android:id="@+id/address"
             android:ellipsize="end"
             tools:text="address"
-            android:layout_width="100dp"
+            android:textColor="@color/blue_grey"
+            android:textSize="14dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="4dp"
             app:layout_constraintTop_toBottomOf="@+id/cuisine"
             app:layout_constraintStart_toStartOf="@+id/cuisine" android:layout_marginBottom="16dp"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/restaurent_thumb"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

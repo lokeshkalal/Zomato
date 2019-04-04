@@ -10,15 +10,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dev.lokeshkalal.zomato.R
 import com.dev.lokeshkalal.zomato.repository.model.RestaurentCategory
+import com.dev.lokeshkalal.zomato.ui.Location
 import com.dev.lokeshkalal.zomato.ui.restaurents.ChildRecyclerViewState
 import com.dev.lokeshkalal.zomato.ui.restaurents.RestaurentAdapter
 import com.dev.lokeshkalal.zomato.ui.restaurents.RestaurentListingViewModel
 import com.dev.lokeshkalal.zomato.ui.restaurents.TimeLineEndlessRecyclerScrollListener
 
-class CategoryAdapter(val homeScreenFragment: HomeScreenFragment) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+class CategoryAdapter(val homeScreenFragment: HomeScreenFragment, location: Location) :
+    RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     companion object {
         const val TAG = "CategoryAdapter"
+    }
+
+
+    var currentLocation: Location
+
+    init {
+        currentLocation = location
     }
 
     var categoryList: List<RestaurentCategory> = mutableListOf()
@@ -37,7 +46,6 @@ class CategoryAdapter(val homeScreenFragment: HomeScreenFragment) : RecyclerView
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val category = categoryList[position]
-        holder.categoryIdTextView.text = category.id
         holder.categoryNameTextView.text = category.name
 
         var childRecyclerViewState: ChildRecyclerViewState? = childPositionChildState.get(position)
@@ -92,8 +100,8 @@ class CategoryAdapter(val homeScreenFragment: HomeScreenFragment) : RecyclerView
             childRecyclerViewState.adapter.showLoadMore()
             childRecyclerViewState.viewModel.fetchRestaurents(
                 categortId.toInt(),
-                28.7041,
-                77.1025,
+                currentLocation.lat,
+                currentLocation.long,
                 childRecyclerViewState.adapter.restaurentList.count()
             )
         }
@@ -122,12 +130,10 @@ class CategoryAdapter(val homeScreenFragment: HomeScreenFragment) : RecyclerView
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val categoryIdTextView: TextView
         val categoryNameTextView: TextView
         val recyclerView: RecyclerView
 
         init {
-            categoryIdTextView = view.findViewById(R.id.category_id)
             categoryNameTextView = view.findViewById(R.id.category_name)
             recyclerView = view.findViewById(R.id.rest_recyler_view)
             recyclerView.setRecycledViewPool(viewPool)
