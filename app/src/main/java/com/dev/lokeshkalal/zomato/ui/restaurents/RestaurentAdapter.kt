@@ -22,6 +22,7 @@ class RestaurentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var showLoadMore = false; // hacky solution but want to create common model interface for now
     var restaurentList: MutableList<Restaurent> = mutableListOf()
+    private var clickListener: RestaurentClickListener? = null
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -78,7 +79,7 @@ class RestaurentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ViewHolder -> {
-                holder.bind(restaurentList[position])
+                holder.bind(restaurentList[position], clickListener)
             }
 
             is LoadingViewHolder -> {
@@ -101,6 +102,10 @@ class RestaurentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     }
 
+    fun setClickListener(clickListener: RestaurentClickListener?) {
+        this.clickListener = clickListener
+    }
+
     class LoadingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     }
@@ -120,7 +125,7 @@ class RestaurentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             thumb = view.findViewById(R.id.restaurent_thumb)
         }
 
-        fun bind(restaurent: Restaurent) {
+        fun bind(restaurent: Restaurent, clickListener: RestaurentClickListener?) {
             restaurentName.text = restaurent.name
             rating.text = restaurent.rating
             rating.setBackgroundColor(Color.parseColor("#" + restaurent.ratingColor))
@@ -131,6 +136,8 @@ class RestaurentAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 .placeholder(R.drawable.restaurent_placeholder)
                 .apply(RequestOptions().transform(RoundedCorners(10)))
                 .into(thumb)
+
+            itemView.setOnClickListener { clickListener?.onRestaurentClicked(restaurent.restaurentId) }
         }
     }
 }

@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 
-abstract class TimeLineEndlessRecyclerScrollListener : RecyclerView.OnScrollListener() {
+abstract class LoadMoreRecyclerScrollListener : RecyclerView.OnScrollListener() {
 
 
     /**

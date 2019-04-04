@@ -21,6 +21,7 @@ class ZomatoRepository {
             .map {
                 it.restaurants.map { restaurant ->
                     Restaurent(
+                        restaurant.restaurant.r.resId,
                         restaurant.restaurant.name,
                         restaurant.restaurant.location.localityVerbose,
                         restaurant.restaurant.cuisines,

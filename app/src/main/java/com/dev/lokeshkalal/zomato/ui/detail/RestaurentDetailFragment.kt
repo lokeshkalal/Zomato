@@ -14,16 +14,24 @@ import kotlinx.android.synthetic.main.restaurent_detail_fragment.*
 class RestaurentDetailFragment : Fragment() {
 
     companion object {
-        fun newInstance() = RestaurentDetailFragment()
+
+        fun newInstance(restaurentId: Int): RestaurentDetailFragment {
+            val bundle = Bundle()
+            bundle.putInt(RestaurentDetail.ARG_RESTATURENT_ID, restaurentId);
+            val fragment = RestaurentDetailFragment()
+            fragment.arguments = bundle
+            return fragment
+        }
     }
 
     private lateinit var viewModel: RestaurentDetailViewModel
-
+    private var restaurentId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        restaurentId = arguments?.getInt(RestaurentDetail.ARG_RESTATURENT_ID, 0)!!
         viewModel = ViewModelProviders.of(this).get(RestaurentDetailViewModel::class.java)
-        viewModel.fetchRestaurentDetail(18649486)
+        viewModel.fetchRestaurentDetail(restaurentId)
     }
 
     override fun onCreateView(

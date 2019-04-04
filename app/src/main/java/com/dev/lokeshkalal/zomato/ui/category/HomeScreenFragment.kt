@@ -15,11 +15,13 @@ import com.dev.lokeshkalal.zomato.R
 import com.dev.lokeshkalal.zomato.repository.model.Restaurent
 import com.dev.lokeshkalal.zomato.repository.model.RestaurentCategory
 import com.dev.lokeshkalal.zomato.ui.Location
+import com.dev.lokeshkalal.zomato.ui.detail.RestaurentDetail
 import com.dev.lokeshkalal.zomato.ui.restaurents.RestaurentAdapter
+import com.dev.lokeshkalal.zomato.ui.restaurents.RestaurentClickListener
 import com.dev.lokeshkalal.zomato.ui.restaurents.RestaurentListingViewModel
 import kotlinx.android.synthetic.main.home_screen_fragment.*
 
-class HomeScreenFragment : Fragment() {
+class HomeScreenFragment : Fragment(), RestaurentClickListener {
 
     companion object {
         fun newInstance() = HomeScreenFragment()
@@ -52,11 +54,6 @@ class HomeScreenFragment : Fragment() {
         ObserverFetchCategoryData()
         viewModel.fetchCatgories()
         setToolBar()
-
-
-        //setUpListRecyclerView()
-        //ObserverRestaurentData()
-        //restaurentViewModel.fetchRestaurents(1, 28.7041, 77.1025)
     }
 
     private fun setToolBar() {
@@ -70,6 +67,7 @@ class HomeScreenFragment : Fragment() {
         adapter = CategoryAdapter(this, currentLocation)
         categories_recyler_view.layoutManager = LinearLayoutManager(activity)
         categories_recyler_view.adapter = adapter
+        adapter.setClickListener(this)
     }
 
     private fun ObserverFetchCategoryData() {
@@ -82,22 +80,9 @@ class HomeScreenFragment : Fragment() {
         categories_recyler_view.visibility = VISIBLE
     }
 
-    private fun setUpListRecyclerView() {
-        restaurentAdapter = RestaurentAdapter()
-        categories_recyler_view.layoutManager = LinearLayoutManager(activity)
-        categories_recyler_view.adapter = restaurentAdapter
+    override fun onRestaurentClicked(restaurentId: Int) {
+        startActivity(RestaurentDetail.getRestaurentDetailIntent(context!!, restaurentId))
     }
-
-    private fun ObserverRestaurentData() {
-        restaurentViewModel.getRestaurents().observe(this, Observer { it?.let { renderRestaurentData(it) } })
-    }
-
-    private fun renderRestaurentData(categoryList: List<Restaurent>) {
-        restaurentAdapter.setData(categoryList)
-        progress_bar.visibility = GONE
-        categories_recyler_view.visibility = VISIBLE
-    }
-
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

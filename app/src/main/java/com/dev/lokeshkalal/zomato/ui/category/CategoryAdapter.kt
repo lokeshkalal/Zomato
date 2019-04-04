@@ -11,10 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dev.lokeshkalal.zomato.R
 import com.dev.lokeshkalal.zomato.repository.model.RestaurentCategory
 import com.dev.lokeshkalal.zomato.ui.Location
-import com.dev.lokeshkalal.zomato.ui.restaurents.ChildRecyclerViewState
-import com.dev.lokeshkalal.zomato.ui.restaurents.RestaurentAdapter
-import com.dev.lokeshkalal.zomato.ui.restaurents.RestaurentListingViewModel
-import com.dev.lokeshkalal.zomato.ui.restaurents.TimeLineEndlessRecyclerScrollListener
+import com.dev.lokeshkalal.zomato.ui.restaurents.*
 
 class CategoryAdapter(val homeScreenFragment: HomeScreenFragment, location: Location) :
     RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
@@ -30,10 +27,10 @@ class CategoryAdapter(val homeScreenFragment: HomeScreenFragment, location: Loca
         currentLocation = location
     }
 
-    var categoryList: List<RestaurentCategory> = mutableListOf()
-    var map: HashMap<Int, RestaurentListingViewModel> = hashMapOf()
-    var childPositionChildState: MutableMap<Int, ChildRecyclerViewState> = mutableMapOf()
-    val viewPool = RecyclerView.RecycledViewPool();
+    private var clickListener: RestaurentClickListener? = null
+    private var categoryList: List<RestaurentCategory> = mutableListOf()
+    private var childPositionChildState: MutableMap<Int, ChildRecyclerViewState> = mutableMapOf()
+    private val viewPool = RecyclerView.RecycledViewPool();
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.category_item, parent, false)
@@ -42,6 +39,10 @@ class CategoryAdapter(val homeScreenFragment: HomeScreenFragment, location: Loca
 
     override fun getItemCount(): Int {
         return categoryList.count()
+    }
+
+    fun setClickListener(listener: RestaurentClickListener) {
+        clickListener = listener
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -54,6 +55,7 @@ class CategoryAdapter(val homeScreenFragment: HomeScreenFragment, location: Loca
             val layoutManager = LinearLayoutManager(homeScreenFragment.context, LinearLayoutManager.HORIZONTAL, false)
             val restaurentListingViewModel = RestaurentListingViewModel()
             val restaurentAdapter = RestaurentAdapter()
+            restaurentAdapter.setClickListener(clickListener)
             childRecyclerViewState =
                 ChildRecyclerViewState(
                     restaurentAdapter,
@@ -68,7 +70,7 @@ class CategoryAdapter(val homeScreenFragment: HomeScreenFragment, location: Loca
 
         holder.recyclerView.adapter = childRecyclerViewState.adapter
 
-        holder.recyclerView.addOnScrollListener(object : TimeLineEndlessRecyclerScrollListener() {
+        holder.recyclerView.addOnScrollListener(object : LoadMoreRecyclerScrollListener() {
             override fun onLoadMore() {
                 //childRecyclerViewState.adapter.showLoadMore()
                 loadRestaurent(childRecyclerViewState, category.id)
