@@ -1,4 +1,4 @@
-package com.dev.lokeshkalal.zomato.ui.home
+package com.dev.lokeshkalal.zomato.ui.homeScreen
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

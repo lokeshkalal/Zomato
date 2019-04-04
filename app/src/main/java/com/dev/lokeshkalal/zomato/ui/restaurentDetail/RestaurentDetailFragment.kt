@@ -1,4 +1,4 @@
-package com.dev.lokeshkalal.zomato.ui.detail
+package com.dev.lokeshkalal.zomato.ui.restaurentDetail
 
 import android.graphics.Color
 import android.graphics.PorterDuff

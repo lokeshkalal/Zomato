@@ -3,8 +3,8 @@ package com.dev.lokeshkalal.zomato.injection.module
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dev.lokeshkalal.zomato.injection.ViewModelFactory
-import com.dev.lokeshkalal.zomato.ui.home.HomeScreenViewModel
-import com.dev.lokeshkalal.zomato.ui.detail.RestaurentDetailViewModel
+import com.dev.lokeshkalal.zomato.ui.homeScreen.HomeScreenViewModel
+import com.dev.lokeshkalal.zomato.ui.restaurentDetail.RestaurentDetailViewModel
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module

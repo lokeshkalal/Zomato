@@ -1,10 +1,9 @@
-package com.dev.lokeshkalal.zomato.ui.detail
+package com.dev.lokeshkalal.zomato.ui.restaurentDetail
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dev.lokeshkalal.zomato.remote.model.restaurentDetail.RestaurentDetailResponse
 import com.dev.lokeshkalal.zomato.repository.ZomatoRepository
-import com.dev.lokeshkalal.zomato.repository.ZomatoRepositoryImpl
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
@@ -46,8 +45,8 @@ class RestaurentDetailViewModel @Inject constructor(private val zomatoRepository
 
 
     inner class FetchRestaurentDetailSubscriber : DisposableSingleObserver<RestaurentDetailResponse>() {
-        override fun onSuccess(t: RestaurentDetailResponse) {
-            restaurentDetailLiveData.postValue(t)
+        override fun onSuccess(restaurentDetail: RestaurentDetailResponse) {
+            restaurentDetailLiveData.postValue(restaurentDetail)
         }
 
         override fun onError(e: Throwable) {

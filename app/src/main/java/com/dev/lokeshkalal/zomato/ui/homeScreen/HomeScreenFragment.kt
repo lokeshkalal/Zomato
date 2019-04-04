@@ -1,4 +1,4 @@
-package com.dev.lokeshkalal.zomato.ui.home
+package com.dev.lokeshkalal.zomato.ui.homeScreen
 
 import android.content.Context
 import androidx.lifecycle.ViewModelProviders
@@ -17,8 +17,10 @@ import com.dev.lokeshkalal.zomato.injection.ViewModelFactory
 import com.dev.lokeshkalal.zomato.repository.ZomatoRepository
 import com.dev.lokeshkalal.zomato.repository.model.RestaurentCategory
 import com.dev.lokeshkalal.zomato.ui.model.Location
-import com.dev.lokeshkalal.zomato.ui.detail.RestaurentDetailActivity
+import com.dev.lokeshkalal.zomato.ui.restaurentDetail.RestaurentDetailActivity
 import com.dev.lokeshkalal.zomato.ui.restaurents.RestaurentClickListener
+import com.dev.lokeshkalal.zomato.ui.state.Resource
+import com.dev.lokeshkalal.zomato.ui.state.ResourceState
 import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.home_screen_fragment.*
 import javax.inject.Inject
@@ -64,6 +66,11 @@ class HomeScreenFragment : Fragment(), RestaurentClickListener {
         ObserverFetchCategoryData()
         viewModel.fetchCatgories()
         setToolBar()
+        setUpRetryButton()
+    }
+
+    private fun setUpRetryButton() {
+        retry.setOnClickListener { viewModel.fetchCatgories() }
     }
 
     private fun setToolBar() {
@@ -84,10 +91,46 @@ class HomeScreenFragment : Fragment(), RestaurentClickListener {
         viewModel.getCategories().observe(this, Observer { it?.let { renderData(it) } })
     }
 
-    private fun renderData(categoryList: List<RestaurentCategory>) {
-        adapter.setData(categoryList)
+    private fun renderData(categoryListResource: Resource<List<RestaurentCategory>>) {
+        when (categoryListResource.resourceState) {
+
+            ResourceState.LOADING -> {
+                showLoadingScreen();
+            }
+            ResourceState.SUCCESS -> {
+                showList(categoryListResource.data)
+            }
+            ResourceState.ERROR -> {
+                showErrorScreen()
+            }
+        }
+
+
+    }
+
+    private fun showList(data: List<RestaurentCategory>?) {
+        data?.let {
+            adapter.setData(data)
+            progress_bar.visibility = GONE
+            retry.visibility = GONE
+            categories_recyler_view.visibility = VISIBLE
+        }
+
+    }
+
+    private fun showErrorScreen() {
         progress_bar.visibility = GONE
-        categories_recyler_view.visibility = VISIBLE
+        retry.visibility = VISIBLE
+        categories_recyler_view.visibility = GONE
+
+    }
+
+    private fun showLoadingScreen() {
+        progress_bar.visibility = VISIBLE
+        retry.visibility = GONE
+        categories_recyler_view.visibility = GONE
+
+
     }
 
     override fun onRestaurentClicked(restaurentId: Int) {

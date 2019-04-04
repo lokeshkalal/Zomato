@@ -1,4 +1,4 @@
-package com.dev.lokeshkalal.zomato.ui.home
+package com.dev.lokeshkalal.zomato.ui.homeScreen
 
 import android.util.Log
 import android.view.LayoutInflater

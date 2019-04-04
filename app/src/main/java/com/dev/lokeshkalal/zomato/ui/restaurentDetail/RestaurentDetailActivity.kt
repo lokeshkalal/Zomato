@@ -1,4 +1,4 @@
-package com.dev.lokeshkalal.zomato.ui.detail
+package com.dev.lokeshkalal.zomato.ui.restaurentDetail
 
 import android.content.Context
 import android.content.Intent

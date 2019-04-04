@@ -55,10 +55,10 @@ class RestaurentListingViewModel constructor(private val zomatoRepository: Zomat
     }
 
     inner class FetchRestaurentSubscriber : DisposableSingleObserver<List<Restaurent>>() {
-        override fun onSuccess(t: List<Restaurent>) {
-            moreDataAvailable = !t.isEmpty()
+        override fun onSuccess(restaurentList: List<Restaurent>) {
+            moreDataAvailable = !restaurentList.isEmpty()
             val currentList = obtainCurrentData().toMutableList()
-            currentList.addAll(t)
+            currentList.addAll(restaurentList)
             restaurentLiveData.postValue(Resource(ResourceState.SUCCESS, currentList, null))
         }
 
